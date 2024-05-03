@@ -12,9 +12,9 @@ namespace ESP8266_IoT {
     }
 
     export enum KidsIotSwitchState {
-        //% block="on"
+        //% block="Zapnutý"
         on = 1,
-        //% block="off"
+        //% block="Vypnutý"
         off = 2
     }
 
@@ -144,7 +144,7 @@ namespace ESP8266_IoT {
     /**
      * Initialize ESP8266 module
      */
-    //% block="set ESP8266|RX %tx|TX %rx|Baud rate %baudrate"
+    //% block="Nastav ESP8266|RX %tx|TX %rx|Baud rate %baudrate"
     //% tx.defl=SerialPin.P8
     //% rx.defl=SerialPin.P12
     //% ssid.defl=your_ssid
@@ -160,9 +160,9 @@ namespace ESP8266_IoT {
     /**
      * connect to Wifi router
      */
-    //% block="connect Wifi SSID = %ssid|KEY = %pw"
-    //% ssid.defl=your_ssid
-    //% pw.defl=your_pwd weight=95
+    //% block="Pripoj sa k Wifi SSID = %ssid|KEY = %pw"
+    //% ssid.defl=meno_wifi
+    //% pw.defl=heslo weight=95
     export function connectWifi(ssid: string, pw: string) {
 
         while (1) {
@@ -193,7 +193,7 @@ namespace ESP8266_IoT {
      * Warning: Deprecated.
      * Check if ESP8266 successfully connected to Wifi
      */
-    //% block="Wifi connected %State" weight=70
+    //% block="Wifi pripojené %State" weight=70
     export function wifiState(state: boolean) {
         return wifi_connected === state
     }
@@ -201,7 +201,7 @@ namespace ESP8266_IoT {
     /**
      * Connect to ThingSpeak
      */
-    //% block="connect thingspeak"
+    //% block="Pripoj sa k thingspeak"
     //% write_api_key.defl=your_write_api_key
     //% subcategory="ThingSpeak" weight=90
     export function connectThingSpeak() {
@@ -225,7 +225,7 @@ namespace ESP8266_IoT {
     /**
      * Connect to ThingSpeak and set data.
      */
-    //% block="set data to send ThingSpeak | Write API key = %write_api_key|Field 1 = %n1||Field 2 = %n2|Field 3 = %n3|Field 4 = %n4|Field 5 = %n5|Field 6 = %n6|Field 7 = %n7|Field 8 = %n8"
+    //% block="Priprav dáta na odoslanie na ThingSpeak | API kľúč pre zápis = %write_api_key|Pole 1 = %n1||Pole 2 = %n2|Pole 3 = %n3|Pole 4 = %n4|Pole 5 = %n5|Pole 6 = %n6|Pole 7 = %n7|Pole 8 = %n8"
     //% write_api_key.defl=your_write_api_key
     //% expandableArgumentMode="enabled"
     //% subcategory="ThingSpeak" weight=85
@@ -254,7 +254,7 @@ namespace ESP8266_IoT {
     /**
      * upload data. It would not upload anything if it failed to connect to Wifi or ThingSpeak.
      */
-    //% block="Upload data to ThingSpeak"
+    //% block="Nahraj dáta na ThingSpeak"
     //% subcategory="ThingSpeak" weight=80
     export function uploadData() {
         let mscnt = 0
@@ -282,7 +282,7 @@ namespace ESP8266_IoT {
     /*
      * Check if ESP8266 successfully connected to ThingSpeak
      */
-    //% block="ThingSpeak connected %State"
+    //% block="ThingSpeak pripojený %State"
     //% subcategory="ThingSpeak" weight=65
     export function thingSpeakState(state: boolean) {
         return thingspeak_connected === state
@@ -293,7 +293,7 @@ namespace ESP8266_IoT {
      * Connect to kidsiot
      */
     //% subcategory=KidsIot weight=50
-    //% blockId=initkidiot block="Connect KidsIot with userToken: %userToken Topic: %topic"
+    //% blockId=initkidiot block="Pripoj KidsIot s tokenom: %userToken a témou: %topic"
     export function connectKidsiot(userToken: string, topic: string): void {
         userToken_def = userToken
         topic_def = topic
@@ -316,7 +316,7 @@ namespace ESP8266_IoT {
      * upload data to kidsiot
      */
     //% subcategory=KidsIot weight=45
-    //% blockId=uploadkidsiot block="Upload data %data to kidsiot"
+    //% blockId=uploadkidsiot block="Nahraj dáta %data na KidsIot"
     export function uploadKidsiot(data: number): void {
         data = Math.floor(data)
         const jsonText = `{"topic":"${topic_def}","userToken":"${userToken_def}","op":"up","data":"${data}"}`
@@ -334,7 +334,7 @@ namespace ESP8266_IoT {
      * disconnect from kidsiot
      */
     //% subcategory=KidsIot weight=40
-    //% blockId=Disconnect block="Disconnect with kidsiot"
+    //% blockId=Disconnect block="Odpojiť od KidsIot"
     export function disconnectKidsiot(): void {
         if (kidsiot_connected) {
             const jsonText = `{"topic":"${topic_def}","userToken":"${userToken_def}","op":"close"}`
@@ -352,13 +352,13 @@ namespace ESP8266_IoT {
     /*
      * Check if ESP8266 successfully connected to KidsIot
      */
-    //% block="KidsIot connection %State"
+    //% block="KidsIot pripojené %State"
     //% subcategory="KidsIot" weight=35
     export function kidsiotState(state: boolean) {
         return kidsiot_connected === state
     }
 
-    //% block="When switch %vocabulary"
+    //% block="Ak prepínač %vocabulary"
     //% subcategory="KidsIot" weight=30
     //% state.fieldEditor="gridpicker" state.fieldOptions.columns=2
     export function iotSwitchEvent(state: KidsIotSwitchState, handler: () => void) {
@@ -379,7 +379,7 @@ namespace ESP8266_IoT {
      * Connect to MQTT broker
      */
     //% subcategory=MQTT weight=25
-    //% blockId=connectMQTT block="connect MQTT broker host: %host port: %port reconnect: $reconnect"
+    //% blockId=connectMQTT block="Pripoj sa na MQTT poskytovateľa hosť: %host port: %port znovu pripojiť: $reconnect"
     export function connectMQTT(host: string, port: number, reconnect: boolean): void {
         mqtthost_def = host
         const rec = reconnect ? 0 : 1
@@ -395,7 +395,7 @@ namespace ESP8266_IoT {
     /*
      * Check if ESP8266 successfully connected to mqtt broker
      */
-    //% block="MQTT broker is connected"
+    //% block="MQTT poskytovateľ je pripojený"
     //% subcategory="MQTT" weight=24
     export function isMqttBrokerConnected() {
         return mqttBrokerConnected
@@ -405,7 +405,7 @@ namespace ESP8266_IoT {
      * send message
      */
     //% subcategory=MQTT weight=21
-    //% blockId=sendMQTT block="publish %msg to Topic:%topic with Qos:%qos"
+    //% blockId=sendMQTT block="Publikuj správu %msg na tému:%topic s Qos:%qos"
     //% msg.defl=hello
     //% topic.defl=topic/1
     export function publishMqttMessage(msg: string, topic: string, qos: QosList): void {
@@ -417,12 +417,12 @@ namespace ESP8266_IoT {
      * disconnect MQTT broker
      */
     //% subcategory=MQTT weight=15
-    //% blockId=breakMQTT block="Disconnect from broker"
+    //% blockId=breakMQTT block="Odpojiť od MQTT poskytovateľa"
     export function breakMQTT(): void {
         sendAT("AT+MQTTCLEAN=0", 1000)
     }
 
-    //% block="when Topic: %topic have new $message with Qos: %qos"
+    //% block="Ak téma: %topic má novú správu $message s Qos: %qos"
     //% subcategory=MQTT weight=10
     //% draggableParameters
     //% topic.defl=topic/1
@@ -436,7 +436,7 @@ namespace ESP8266_IoT {
      * set ifttt
      */
     //% subcategory=IFTTT weight=9
-    //% blockId=setIFTTT block="set IFTTT key:%key event:%event"
+    //% blockId=setIFTTT block="Nastav IFTTT kľúč:%key a udalosť:%event"
     export function setIFTTT(key: string, event: string): void {
         iftttkey_def = key
         iftttevent_def = event
@@ -446,7 +446,7 @@ namespace ESP8266_IoT {
      * post ifttt
      */
     //% subcategory=IFTTT weight=8
-    //% blockId=postIFTTT block="post IFTTT with|value1:%value value2:%value2 value3:%value3"
+    //% blockId=postIFTTT block="Pošli skrz IFTTT hodnoty|hodnota1:%value hodnota2:%value2 hodnota3:%value3"
     export function postIFTTT(value1: string, value2: string, value3: string): void {
         let sendST1 = "AT+HTTPCLIENT=3,1,\"http://maker.ifttt.com/trigger/" + iftttevent_def + "/with/key/" + iftttkey_def + "\",,,2,"
         let sendST2 = "\"{\\\"value1\\\":\\\"" + value1 + "\\\"\\\,\\\"value2\\\":\\\"" + value2 + "\\\"\\\,\\\"value3\\\":\\\"" + value3 + "\\\"}\""

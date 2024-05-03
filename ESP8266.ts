@@ -406,8 +406,8 @@ namespace ESP8266_IoT {
      */
     //% subcategory=MQTT weight=21
     //% blockId=sendMQTT block="Publikuj správu %msg na tému:%topic s Qos:%qos"
-    //% msg.defl=hello
-    //% topic.defl=topic/1
+    //% msg.defl=ahoj
+    //% topic.defl=téma/1
     export function publishMqttMessage(msg: string, topic: string, qos: QosList): void {
         sendAT(`AT+MQTTPUB=0,"${topic}","${msg}",${qos},0`, 1000)
         recvString = ""
@@ -425,7 +425,7 @@ namespace ESP8266_IoT {
     //% block="Ak téma: %topic má novú správu $message s Qos: %qos"
     //% subcategory=MQTT weight=10
     //% draggableParameters
-    //% topic.defl=topic/1
+    //% topic.defl=téma/1
     export function MqttEvent(topic: string, qos: QosList, handler: (message: string) => void) {
         mqttSubscribeHandlers[topic] = handler
         mqttSubscribeQos[topic] = qos

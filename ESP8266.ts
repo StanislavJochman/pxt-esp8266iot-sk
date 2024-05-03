@@ -370,7 +370,7 @@ namespace ESP8266_IoT {
      * Set  MQTT client
      */
     //% subcategory=MQTT weight=30
-    //% blockId=initMQTT block="Set MQTT client config|scheme: %scheme clientID: %clientID username: %username password: %password path: %path"
+    //% blockId=initMQTT block="Nastavenie konfigurácie MQTT klienta|schéma: %scheme clientID: %clientID meno: %username heslo: %password cesta: %path"
     export function setMQTT(scheme: SchemeList, clientID: string, username: string, password: string, path: string): void {
         sendAT(`AT+MQTTUSERCFG=0,${scheme},"${clientID}","${username}","${password}",0,0,"${path}"`, 1000)
     }
